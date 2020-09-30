@@ -45,7 +45,7 @@ function h_prime(
     else
         hs_p = hs
     end
-    return hs
+    return hs_p
 end
 
 
@@ -131,6 +131,7 @@ function max_z(
     delta_t = max(Ts - Ta, 0.)
     if stable
         if delta_t > delta_t_crit
+
         else
         end
     else
