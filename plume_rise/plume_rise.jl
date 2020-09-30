@@ -56,8 +56,8 @@ function Fb(
     Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
     Ta  # Temperatura ambiente (K)
 )
-    const g = 9.807
-    return g * vs * ds^2 * (Ts-Ta)/(4.*Ts)
+    G = 9.807
+    return G * vs * ds^2 * (Ts-Ta)/(4. * Ts)
 end
 
 
@@ -67,7 +67,7 @@ function Fm(
     Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
     Ta  # Temperatura ambiente (K)
 )
-    return vs^2 * ds^2 * Ta/(4.*Ts)
+    return vs^2 * ds^2 * Ta/(4. * Ts)
 end
 
 
@@ -109,9 +109,9 @@ function max_z(
         elseif fb > 0.
             xb = 49.0 * fb^(5./8.)
         else
-            xb = 4.0 * ds * (vs+3*ds)^2/(vs*ds)
+            xb = 4.0 * ds * (vs + 3. * ds)^2/(vs*ds)
         end
-        xm = 4.0 * ds * (vs+3*ds)^2/(vs*ds)
+        xm = 4.0 * ds * (vs + 3. * ds)^2/(vs*ds)
     end
     xmax = max(xb, xm)
 
