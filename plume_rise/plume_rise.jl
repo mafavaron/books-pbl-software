@@ -132,9 +132,9 @@ function max_z(
     hps = h_prime(hs, vs, ds, us)
     if stable
         if delta_t > delta_t_crit
-            hmax = hps + 2.6 * (Fb / (us * s))^(1. / 3.)
+            hmax = hps + 2.6 * (fb / (us * s))^(1. / 3.)
         else
-            hmax = hps + 1.5 * (Fb / (us * sqrt(s)))^(1. / 3.)
+            hmax = hps + 1.5 * (fb / (us * sqrt(s)))^(1. / 3.)
         end
     else
         if delta_t > delta_t_crit
