@@ -105,9 +105,9 @@ function max_z(
         xm = 3.1415927/2. * us/sqrt(s)
     else
         if fb > 55
-            xb = 119.0 * fb^(2./5.)
+            xb = 119.0 * fb^(2. / 5.)
         elseif fb > 0.
-            xb = 49.0 * fb^(5./8.)
+            xb = 49.0 * fb^(5. / 8.)
         else
             xb = 4.0 * ds * (vs + 3. * ds)^2/(vs*ds)
         end
@@ -121,9 +121,9 @@ function max_z(
         delta_t_crit = 0.019582 * Ts * vs * sqrt(s)
     else
         if fb < 55.0
-            delta_t_crit = 0.0297 * Ts * vs^(1./3.) / ds^(2./3.)
+            delta_t_crit = 0.0297 * Ts * vs^(1. / 3.) / ds^(2. / 3.)
         else
-            delta_t_crit = 0.00575 * Ts * vs^(2./3.) / us^()1./3.
+            delta_t_crit = 0.00575 * Ts * vs^(2.  /3.) / us^(1. / 3.)
         end
     end
 
@@ -132,16 +132,16 @@ function max_z(
     hps = h_prime(hs, vs, ds, us)
     if stable
         if delta_t > delta_t_crit
-            hmax = hps + 2.6 * (Fb / (us * s))^(1./3.)
+            hmax = hps + 2.6 * (Fb / (us * s))^(1. / 3.)
         else
-            hmax = hps + 1.5 * (Fb / (us * sqrt(s)))^(1./3.)
+            hmax = hps + 1.5 * (Fb / (us * sqrt(s)))^(1. / 3.)
         end
     else
         if delta_t > delta_t_crit
             if fb < 55.
-                hmax = hps + 21.425 * fb^(3./4.) / us
+                hmax = hps + 21.425 * fb^(3. / 4.) / us
             else
-                hmax = hps + 38.75 * fb^(3./5.) / us
+                hmax = hps + 38.75 * fb^(3. / 5.) / us
             end
         else
             hmax = hps + 3. * ds * vs / us
