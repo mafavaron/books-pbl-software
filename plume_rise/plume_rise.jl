@@ -60,6 +60,20 @@ function Fm(vs,ds,Ts,Ta)
 end
 
 
-function max_z(istab, us, vs, ds, ts)
+function max_z(istab, hs, us, vs, ds, Ts, Ta)
+
+    # Stable, or neutral/convective?
+    if istab <= 3
+        stable = true
+    else
+        stable = false
+    end
+
+    # Stima della distanza sottovento alla quale
+    # il pennacchio raggiunge la sua quota massima
+    if stable
+        xb = 2.0715*us/sqrt(s)
+    else
+    end
 
 end
