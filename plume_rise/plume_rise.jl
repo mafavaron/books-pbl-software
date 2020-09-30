@@ -45,21 +45,107 @@ function h_prime(
     else
         hs_p = hs
     end
-    return hs
+    return hs_p
 end
 
 
-function Fb(vs,ds,Ts,Ta)
+# Flusso di galleggiamento
+function Fb(
+    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds, # Diametro della ciminiera al vertice (m)
+    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta  # Temperatura ambiente (K)
+)
     const g = 9.807
     return g * vs * ds^2 * (Ts-Ta)/(4.*Ts)
 end
 
 
-function Fm(vs,ds,Ts,Ta)
+function Fm(
+    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds, # Diametro della ciminiera al vertice (m)
+    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta  # Temperatura ambiente (K)
+)
     return vs^2 * ds^2 * Ta/(4.*Ts)
 end
 
 
-function max_z(istab, us, vs, ds, ts)
+function max_z(
+    istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
+    hs, # Altezza geometrica della ciminiera (m)
+    us, # Velocità del vento alla quota del vertice della ciminiera (m/s)
+    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds, # Diametro della ciminiera al vertice (m)
+    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta  # Temperatura ambiente (K)
+)
+
+    # Stable, or neutral/convective?
+    if istab <= 4
+        stable = true
+    else
+        stable = false
+    end
+
+    # Calcolo dei flussi di galleggiamento e
+    # di quantità di moto
+    fb = Fb(vs,ds,Ts,Ta)
+    fm = Fm(vs,ds,Ts,Ta)
+
+    # Stima della distanza sottovento alla quale
+    # il pennacchio raggiunge la sua quota massima
+    if stable
+        if istab == 5
+            s = 0.020
+        else
+            s = 0.035
+        end
+        xb = 2.0715 * us/sqrt(s)
+        xm = 3.1415927/2. * us/sqrt(s)
+    else
+        if fb > 55
+            xb = 119.0 * fb^(2./5.)
+        elseif fb > 0.
+            xb = 49.0 * fb^(5./8.)
+        else
+            xb = 4.0 * ds * (vs+3*ds)^2/(vs*ds)
+        end
+        xm = 4.0 * ds * (vs+3*ds)^2/(vs*ds)
+    end
+    xmax = max(xb, xm)
+
+    # Calcolo della differenza di Temperatura
+    # critica
+    if stable
+        delta_t_crit = 0.019582 * Ts * vs * sqrt(s)
+    else
+        if fb < 55.0
+            delta_t_crit = 0.0297 * Ts * vs^(1./3.) / ds^(2./3.)
+        else
+            delta_t_crit = 0.00575 * Ts * vs^(2./3.) / us^()1./3.
+        end
+    end
+
+    # Stima della quota massima raggiunta dal pennacchio
+    delta_t = max(Ts - Ta, 0.)
+    hps = h_prime(hs, vs, ds, us)
+    if stable
+        if delta_t > delta_t_crit
+            hmax = hps + 2.6 * (Fb / (us * s))^(1./3.)
+        else
+            hmax = hps + 1.5 * (Fb / (us * sqrt(s)))^(1./3.)
+        end
+    else
+        if delta_t > delta_t_crit
+            if fb < 55.
+                hmax = hps + 21.425 * fb^(3./4.) / us
+            else
+                hmax = hps + 38.75 * fb^(3./5.) / us
+            end
+        else
+            hmax = hps + 3. * ds * vs / us
+        end
+    end
 
 end
