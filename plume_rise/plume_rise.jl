@@ -113,5 +113,30 @@ function max_z(
         end
         xm = 4.0 * ds * (vs+3*ds)^2/(vs*ds)
     end
+    xmax = max(xb, xm)
+
+    # Calcolo della differenza di Temperatura
+    # critica
+    if stable
+        delta_t_crit = 0.019582 * Ts * vs * sqrt(s)
+    else
+        if fb < 55.0
+            delta_t_crit = 0.0297 * Ts * vs^(1./3.) / ds^(2./3.)
+        else
+            delta_t_crit = 0.00575 * Ts * vs^(2./3.) / us^()1./3.
+        end
+    end
+
+    # Stima della quota massima raggiunta dal pennacchio
+    delta_t = max(Ts - Ta, 0.)
+    if stable
+        if delta_t > delta_t_crit
+        else
+        end
+    else
+        if delta_t > delta_t_crit
+        else
+        end
+    end
 
 end
