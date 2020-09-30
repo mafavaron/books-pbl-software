@@ -104,7 +104,7 @@ function max_z(
         xb = 2.0715 * us/sqrt(s)
         xm = 3.1415927/2. * us/sqrt(s)
     else
-        if fb > 55
+        if fb > 55.
             xb = 119.0 * fb^(2. / 5.)
         elseif fb > 0.
             xb = 49.0 * fb^(5. / 8.)
