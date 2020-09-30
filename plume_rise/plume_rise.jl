@@ -9,7 +9,7 @@ function us(
 )
 
     # Basic parameter check
-    if istab < 1 or istab > 6 or env_id < 1 or env_id > 2
+    if istab < 1 || istab > 6 || env_id < 1 || env_id > 2
         return missing
     end
 
@@ -147,5 +147,8 @@ function max_z(
             hmax = hps + 3. * ds * vs / us
         end
     end
+
+    # Leave
+    return hmax
 
 end
