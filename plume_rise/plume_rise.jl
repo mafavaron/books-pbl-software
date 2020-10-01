@@ -1,3 +1,10 @@
+# Raccolta di funzioni per il calcolo della quota del centro
+# del pennacchio come in ISC3.
+#
+# Scritto da: Patrizia Favaron
+#
+# Questo codice è coperto dalla licenza MIT.
+
 # Stima della velocità del vento alla quota geometrica
 # della ciminiera
 function us(
