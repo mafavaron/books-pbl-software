@@ -71,9 +71,12 @@ function Fm(
 end
 
 
-function max_z(
+function is_stable(istab)
+    return istab >= 5
+end
+
+function max_x(
     istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
-    hs, # Altezza geometrica della ciminiera (m)
     us, # Velocità del vento alla quota del vertice della ciminiera (m/s)
     vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
     ds, # Diametro della ciminiera al vertice (m)
@@ -82,16 +85,11 @@ function max_z(
 )
 
     # Stable, or neutral/convective?
-    if istab <= 4
-        stable = true
-    else
-        stable = false
-    end
+    stable = is_stable(istab)
 
     # Calcolo dei flussi di galleggiamento e
     # di quantità di moto
     fb = Fb(vs,ds,Ts,Ta)
-    fm = Fm(vs,ds,Ts,Ta)
 
     # Stima della distanza sottovento alla quale
     # il pennacchio raggiunge la sua quota massima
@@ -115,15 +113,45 @@ function max_z(
     end
     xmax = max(xb, xm)
 
+    # Leave
+    return xmax
+
+end
+
+
+function max_z(
+    istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
+    hs, # Altezza geometrica della ciminiera (m)
+    us, # Velocità del vento alla quota del vertice della ciminiera (m/s)
+    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds, # Diametro della ciminiera al vertice (m)
+    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta  # Temperatura ambiente (K)
+)
+
+    # Stable, or neutral/convective?
+    stable = is_stable(istab)
+
+    # Calcolo dei flussi di galleggiamento e
+    # di quantità di moto
+    fb = Fb(vs,ds,Ts,Ta)
+    fm = Fm(vs,ds,Ts,Ta)
+
     # Calcolo della differenza di Temperatura
     # critica
     if stable
+        if istab == 5
+            s = 0.020
+        else
+            s = 0.035
+        end
         delta_t_crit = 0.019582 * Ts * vs * sqrt(s)
     else
+        s = missing
         if fb < 55.0
             delta_t_crit = 0.0297 * Ts * vs^(1. / 3.) / ds^(2. / 3.)
         else
-            delta_t_crit = 0.00575 * Ts * vs^(2.  /3.) / us^(1. / 3.)
+            delta_t_crit = 0.00575 * Ts * vs^(2. / 3.) / us^(1. / 3.)
         end
     end
 
