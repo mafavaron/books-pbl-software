@@ -8,11 +8,11 @@
 # Stima della velocità del vento alla quota geometrica
 # della ciminiera
 function us(
-    zr,    # Quota alla quale è misurato il vento (m)
-    ur,    # Velocità del vento misurata alla quota 'zr' (m/s)
-    hs,    # Altezza geometrica della ciminiera (m)
-    istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
-    env_id # Identificatore di tipo ambiente (1=rurale, 2=urbano)
+    zr::Float64,    # Quota alla quale è misurato il vento (m)
+    ur::Float64,    # Velocità del vento misurata alla quota 'zr' (m/s)
+    hs::Float64,    # Altezza geometrica della ciminiera (m)
+    istab::Int32,   # Categoria di stabilità (1=A, 2=B, ..., 6=F)
+    env_id::Int32   # Identificatore di tipo ambiente (1=rurale, 2=urbano)
 )
 
     # Basic parameter check
@@ -42,10 +42,10 @@ end
 # Abbassamento del pennacchio per effetto di scia
 # al vertice della ciminiera.
 function h_prime(
-    hs, # Altezza geometrica della ciminiera (m)
-    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
-    ds, # Diametro della ciminiera al vertice (m)
-    us  # Velocità del vento alla quota geometrica della ciminiera (m/s)
+    hs::Float64, # Altezza geometrica della ciminiera (m)
+    vs::Float64, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds::Float64, # Diametro della ciminiera al vertice (m)
+    us::Float64  # Velocità del vento alla quota geometrica della ciminiera (m/s)
 )
     if vs < 1.5*us
         hs_p = hs + 2*ds*(vs/us - 1.5)
@@ -58,10 +58,10 @@ end
 
 # Flusso di galleggiamento
 function Fb(
-    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
-    ds, # Diametro della ciminiera al vertice (m)
-    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
-    Ta  # Temperatura ambiente (K)
+    vs::Float64, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds::Float64, # Diametro della ciminiera al vertice (m)
+    Ts::Float64, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta::Float64  # Temperatura ambiente (K)
 )
     G = 9.807
     return G * vs * ds^2 * (Ts-Ta)/(4. * Ts)
@@ -69,26 +69,26 @@ end
 
 
 function Fm(
-    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
-    ds, # Diametro della ciminiera al vertice (m)
-    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
-    Ta  # Temperatura ambiente (K)
+    vs::Float64, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds::Float64, # Diametro della ciminiera al vertice (m)
+    Ts::Float64, # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta::Float64  # Temperatura ambiente (K)
 )
     return vs^2 * ds^2 * Ta/(4. * Ts)
 end
 
 
-function is_stable(istab)
+function is_stable(istab::Int32)
     return istab >= 5
 end
 
 function max_x(
-    istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
-    us, # Velocità del vento alla quota del vertice della ciminiera (m/s)
-    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
-    ds, # Diametro della ciminiera al vertice (m)
-    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
-    Ta  # Temperatura ambiente (K)
+    istab::Int32, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
+    us::Float64,  # Velocità del vento alla quota del vertice della ciminiera (m/s)
+    vs::Float64,  # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds::Float64,  # Diametro della ciminiera al vertice (m)
+    Ts::Float64,  # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta::Float64   # Temperatura ambiente (K)
 )
 
     # Stable, or neutral/convective?
@@ -127,13 +127,13 @@ end
 
 
 function max_z(
-    istab, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
-    hs, # Altezza geometrica della ciminiera (m)
-    us, # Velocità del vento alla quota del vertice della ciminiera (m/s)
-    vs, # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
-    ds, # Diametro della ciminiera al vertice (m)
-    Ts, # Temperatura dei fumi all'uscita dalla ciminiera (K)
-    Ta  # Temperatura ambiente (K)
+    istab::Int32, # Categoria di stabilità (1=A, 2=B, ..., 6=F)
+    hs::Float64,  # Altezza geometrica della ciminiera (m)
+    us::Float64,  # Velocità del vento alla quota del vertice della ciminiera (m/s)
+    vs::Float64,  # Velocità verticale dei fumi all'uscita dalla ciminiera (m/s)
+    ds::Float64,  # Diametro della ciminiera al vertice (m)
+    Ts::Float64,  # Temperatura dei fumi all'uscita dalla ciminiera (K)
+    Ta::Float64   # Temperatura ambiente (K)
 )
 
     # Stable, or neutral/convective?
