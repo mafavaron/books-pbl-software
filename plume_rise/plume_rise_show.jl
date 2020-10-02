@@ -16,8 +16,11 @@ function show_max_x_vs(
     Ta::Float64             # Temperatura ambiente (K)
 )
 
-    delta_vs = (vs_max - vs_min) / 10
+    vs = linspace(vs_min, vs_max, 100)
 
-    vs = 
+    max_x_vals = Vector{Float64}(undef, length(vs))
+    for i in 1:length(vs)
+        max_x_vals[i] = max_x(istab, us, vs_val, ds, Ts, Ta)
+    end
 
 end
