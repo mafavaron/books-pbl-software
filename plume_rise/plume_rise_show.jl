@@ -4,6 +4,8 @@
 #
 # Questo codice è coperto dalla licenza MIT.
 
+using Plotly
+
 function show_max_x_vs(
     istab::Int32,           # Categoria di stabilità (1=A, 2=B, ..., 6=F)
     us::Float64,            # Velocità del vento alla quota del vertice della ciminiera (m/s)
@@ -14,11 +16,8 @@ function show_max_x_vs(
     Ta::Float64             # Temperatura ambiente (K)
 )
 
-    # Check parameters
-    n = length(vs)
-    if n != length(Ts)
-        error "show_xmax:: error: Lengths of 'vs' and 'Ts' should be equal"
-    end
+    delta_vs = (vs_max - vs_min) / 10
 
+    vs = 
 
 end
