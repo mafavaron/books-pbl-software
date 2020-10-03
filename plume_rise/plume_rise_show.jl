@@ -23,9 +23,6 @@ function show_max_x_vs(
         max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
     end
 
-    trace = ["x" => vs, "y" => max_x_vals, "type" => "scatter"]
-    data = [trace]
-    response = Plotly.plot(data, ["filename" => "basic-line", "fileopt" => "overwrite"])
-    plot_url = response["url"]
+    plot(vs, max_x_vals)
 
 end
