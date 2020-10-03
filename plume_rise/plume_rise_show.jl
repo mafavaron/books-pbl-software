@@ -20,7 +20,7 @@ function show_max_x_vs(
 
     max_x_vals = Vector{Float64}(undef, length(vs))
     for i in 1:length(vs)
-        max_x_vals[i] = max_x(istab, us, vs_val, ds, Ts, Ta)
+        max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
     end
 
     trace = ["x" => vs, "y" => max_x_vals, "type" => "scatter"]
