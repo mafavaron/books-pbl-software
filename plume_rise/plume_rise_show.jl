@@ -4,7 +4,7 @@
 #
 # Questo codice è coperto dalla licenza MIT.
 
-using Plotly
+using Plots
 
 function show_max_x_vs(
     istab::Int64,           # Categoria di stabilità (1=A, 2=B, ..., 6=F)
@@ -23,6 +23,7 @@ function show_max_x_vs(
         max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
     end
 
-    plot(vs, max_x_vals)
+    gr()    # Force graphic backend to GR
+    plot(vs, max_x_vals, xlabel="Vel. fumi (m/s)", ylabel="x Max h (m)")
 
 end
