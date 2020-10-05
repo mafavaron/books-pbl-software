@@ -17,22 +17,16 @@ function show_max_x_vs(
 
     vs = range(vs_min, vs_max; length=100)
 
-    istab = 1   # Categoria A: il massimo dell'instabilità
-
-    max_x_vals = Vector{Float64}(undef, length(vs))
+    max_x_vals = Array{Float64}(undef, length(vs), 2)
     for i in 1:length(vs)
-        max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
+        max_x_vals[i,1] = max_x(1, us, vs[i], ds, Ts, Ta) # Categoria A: convettività
+        max_x_vals[i,2] = max_x(6, us, vs[i], ds, Ts, Ta) # Categoria F: stabilità
     end
 
     gr()    # Force graphic backend to GR
-    plot(vs, max_x_vals, xlabel="Vel. fumi (m/s)", ylabel="x Max h (m)")
-
-    istab = 6   # Categoria F: Massima stabilità
-
-    for i in 1:length(vs)
-        max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
-    end
-
-    plot!(vs, max_x_vals)
+    plot(vs, max_x_vals)
+    xlabel!("Vel. fumi (m/s)")
+    ylabel!("x alla max altezza (m)")
+    label!(["Cat. A", "Cat. F"])
 
 end
