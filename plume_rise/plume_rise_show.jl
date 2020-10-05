@@ -7,7 +7,6 @@
 using Plots
 
 function show_max_x_vs(
-    istab::Int64,           # Categoria di stabilità (1=A, 2=B, ..., 6=F)
     us::Float64,            # Velocità del vento alla quota del vertice della ciminiera (m/s)
     vs_min::Float64,        # Velocità verticale minima dei fumi all'uscita dalla ciminiera (m/s)
     vs_max::Float64,        # Velocità verticale massima dei fumi all'uscita dalla ciminiera (m/s)
@@ -18,6 +17,8 @@ function show_max_x_vs(
 
     vs = range(vs_min, vs_max; length=100)
 
+    istab = 1   # Categoria A: il massimo dell'instabilità
+
     max_x_vals = Vector{Float64}(undef, length(vs))
     for i in 1:length(vs)
         max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
@@ -25,5 +26,13 @@ function show_max_x_vs(
 
     gr()    # Force graphic backend to GR
     plot(vs, max_x_vals, xlabel="Vel. fumi (m/s)", ylabel="x Max h (m)")
+
+    istab = 6   # Categoria F: Massima stabilità
+
+    for i in 1:length(vs)
+        max_x_vals[i] = max_x(istab, us, vs[i], ds, Ts, Ta)
+    end
+
+    plot!(vs, max_x_vals)
 
 end
