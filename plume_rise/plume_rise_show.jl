@@ -24,9 +24,14 @@ function show_max_x_vs(
     end
 
     gr()    # Force graphic backend to GR
-    plot(vs, max_x_vals)
+    plot(vs, max_x_vals, label = ["Cat. A" "Cat. F"])
     xlabel!("Vel. fumi (m/s)")
     ylabel!("x alla max altezza (m)")
-    label!(["Cat. A", "Cat. F"])
+
+    println(max_x_vals[1,1])
+    println(max_x_vals[2,2])
+
+    println(max_x_vals[length(vs),1])
+    println(max_x_vals[length(vs),2])
 
 end
