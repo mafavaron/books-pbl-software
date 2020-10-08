@@ -15,6 +15,8 @@ function show_max_x_vs(
     Ta::Float64             # Temperatura ambiente (K)
 )
 
+    gr()
+
     vs = range(vs_min, vs_max; length=100)
 
     max_x_vals = Array{Float64}(undef, length(vs), 2)
@@ -23,10 +25,10 @@ function show_max_x_vs(
         max_x_vals[i,2] = max_x(6, us, vs[i], ds, Ts, Ta) # Categoria F: stabilità
     end
 
-    gr()    # Force graphic backend to GR
-    plot(vs, max_x_vals, label = ["Cat. A" "Cat. F"])
-    xlabel!("Vel. fumi (m/s)")
-    ylabel!("x alla max altezza (m)")
+    p = plot(vs, max_x_vals, label = ["Cat. A" "Cat. F"]);
+    xlabel!("Vel. fumi (m/s)");
+    ylabel!("x alla max altezza (m)");
+    display(p)
 
     println(max_x_vals[1,1])
     println(max_x_vals[2,2])
